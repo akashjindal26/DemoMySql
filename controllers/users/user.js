@@ -1,12 +1,6 @@
 const sql = require('../../db.js');
-const USER = require('../../models/users/signup.js');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken"); // to generate signed token
-
-
-async function validatePassword(plainPassword, hashedPassword) {
-  return await bcrypt.compare(plainPassword, hashedPassword)
-}
 
 
 exports.signup = async (req, res) => {
@@ -59,6 +53,7 @@ exports.signup = async (req, res) => {
 exports.signin = async (req, res) => {
 
   var USER_EMAIL = req.body.USER_EMAIL;
+
   await sql.query("CALL sp_search_email(?)", req.body.USER_EMAIL, (err, response) => {
     if (err) {
       res.send({ ERROR: "ERROR" });
@@ -87,8 +82,6 @@ exports.signin = async (req, res) => {
       }
     }
   });
-
-
 
 }
 
